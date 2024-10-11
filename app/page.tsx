@@ -1,7 +1,10 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { FaStop } from "react-icons/fa";
-import { FaFirstAid } from "react-icons/fa";
 import { useChat } from "ai/react";
+import ReactMarkdown from "react-markdown";
+import RemarkGFM from "remark-gfm";
+import { Bot, SendHorizontal } from "lucide-react";
 
 export default function Chat() {
   const {
@@ -17,6 +20,17 @@ export default function Chat() {
       console.log(e);
     },
   });
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]); // Scroll to bottom when messages array changes
+
   return (
     <div className=" w-full min-h-svh max-w-4xl py-10 mx-auto relative">
       <h1 className="text-2xl md:text-4xl font-bold text-center text-white">
@@ -32,23 +46,27 @@ export default function Chat() {
           <div
             key={m.id}
             className={`whitespace-pre-wrap px-6 py-2 rounded-full ${
-              m.role === "user" ? "self-end bg-[#343541] md:w-1/2" : "md:w-3/4"
+              m.role === "user"
+                ? "self-end bg-[#343541] md:w-1/2"
+                : "md:w-5/6 w-full"
             }`}
           >
             <div className="flex">
               {m.role != "user" ? (
-                <div className="grow rounded-full border h-10 w-10 text-sm p-2 font-bold flex items-center justify-center mx-2">
-                  <FaFirstAid size={25} />
+                <div className="rounded-full border h-10 w-10 text-sm p-2 font-bold flex items-center justify-center mx-2">
+                  <Bot />
                 </div>
               ) : (
                 ""
               )}
-              <div className="px-4 py-2">
-                {m.content}
+              <div className="px-4 py-2 prose md:prose-lg text-inherit prose-invert">
+                <ReactMarkdown remarkPlugins={[RemarkGFM]}>
+                  {m.content}
+                </ReactMarkdown>
                 {isLoading &&
                 m.role != "user" &&
                 idx === messages.length - 1 ? (
-                  <div className="bg-gray-800 h-5 w-5 animate-pulse inline-block rounded-full"></div>
+                  <div className="bg-gray-200 h-5 w-5 animate-pulse inline-block rounded-full"></div>
                 ) : (
                   ""
                 )}
@@ -56,6 +74,7 @@ export default function Chat() {
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <form
@@ -76,7 +95,13 @@ export default function Chat() {
             <FaStop />
           </button>
         ) : (
-          ""
+          <button
+            type="submit"
+            className="bg-[#202123] p-3 rounded-full absolute right-5 bottom-[50%] translate-y-[40%] disabled:opacity-50"
+            disabled={input.trim().length <= 2}
+          >
+            <SendHorizontal />
+          </button>
         )}
       </form>
     </div>
