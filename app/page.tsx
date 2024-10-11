@@ -41,11 +41,11 @@ export default function Chat() {
       ) : (
         ""
       )}
-      <div className="flex flex-col px-5 stretch gap-5 py-24">
+      <div className="flex flex-col px-2 md:px-5 stretch gap-5 py-12 md:py-24">
         {messages.map((m, idx) => (
           <div
             key={m.id}
-            className={`whitespace-pre-wrap px-6 py-2 rounded-full ${
+            className={`whitespace-pre-wrap px-3 md:px-6 py-2 rounded-full ${
               m.role === "user"
                 ? "self-end bg-[#343541] md:w-1/2"
                 : "md:w-5/6 w-full"
@@ -59,7 +59,7 @@ export default function Chat() {
               ) : (
                 ""
               )}
-              <div className="px-4 py-2 prose md:prose-lg text-inherit prose-invert">
+              <div className="md:px-4 prose md:prose-lg text-inherit prose-invert">
                 <ReactMarkdown remarkPlugins={[RemarkGFM]}>
                   {m.content}
                 </ReactMarkdown>

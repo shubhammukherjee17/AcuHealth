@@ -13,6 +13,15 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
     },
+    // typography:{
+    //   DEFAULT: {
+    //     css: {
+    //       html:{
+    //           margin:0
+    //       }
+    //     },
+    //   },
+    // }
   },
   plugins: [typography],
 };
