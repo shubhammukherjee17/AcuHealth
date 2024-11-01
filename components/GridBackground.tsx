@@ -11,7 +11,7 @@ export function GridBackground({
   return (
     <div
       className={cn(
-        "h-svh w-full bg-black bg-grid-white/[0.2] relative",
+        "w-full bg-black bg-grid-white/[0.2] relative",
         className
       )}
     >

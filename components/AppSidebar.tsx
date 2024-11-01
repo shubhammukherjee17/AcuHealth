@@ -1,4 +1,4 @@
-import { Home } from "lucide-react";
+import { Bot, Eye } from "lucide-react";
 
 import {
   Sidebar,
@@ -15,9 +15,14 @@ import Link from "next/link";
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "/",
-    icon: Home,
+    title: "AI Assistant",
+    url: "/chat",
+    icon: Bot,
+  },
+  {
+    title: "Vision AI",
+    url: "/vision-ai",
+    icon: Eye,
   },
 ];
 
