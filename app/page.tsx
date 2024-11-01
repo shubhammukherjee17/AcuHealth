@@ -1,37 +1,45 @@
-'use client'
+"use client";
 
-import { useAuth } from "@/context/AuthContext"
-import { GridBackground } from "@/components/GridBackground"
-import { useState } from "react"
-import { ChevronDown, Bot, Eye, Book } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+import {
+  User,
+  ChevronDown,
+  Bot,
+  Eye,
+  FileText,
+  Shield,
+  Zap,
+  Activity,
+} from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { user, googleSignIn, logOut } = useAuth()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
+  const { user, googleSignIn, logOut } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
   const handleSignIn = async () => {
     try {
-      await googleSignIn()
+      await googleSignIn();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleSignOut = async () => {
     try {
-      await logOut()
+      await logOut();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
-    <GridBackground className="min-h-screen flex flex-col bg-gray-900 text-gray-100">
+    <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100">
       <header className="border-b border-gray-800 py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">VitaeAI</h1>
+          <h1 className="text-2xl font-bold text-blue-500">VitaeAI</h1>
           <nav>
             {user ? (
               <div className="relative">
@@ -40,7 +48,7 @@ export default function Home() {
                   className="flex items-center space-x-2 bg-gray-800 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <Image
-                    src={user.photoURL ?? "https://via.placeholder.com/40"}
+                    src={user.photoURL || "https://via.placeholder.com/40"}
                     alt={user.displayName || "User"}
                     className="w-8 h-8 rounded-full"
                     width={40}
@@ -72,60 +80,167 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-grow container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-            Welcome to VitaeAI
-          </h2>
-          <p className="text-xl text-gray-400 mb-8">
-            The next-generation platform for health and wellness.
-          </p>
-          {!user && (
+      <main className="flex-grow">
+        <section className="py-20 text-center">
+          <div className="container mx-auto px-4">
+            <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">
+              Revolutionizing Healthcare with AI
+            </h2>
+            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+              Empower your healthcare practice with cutting-edge AI technology
+              for improved diagnostics, patient care, and operational
+              efficiency.
+            </p>
             <button
-              onClick={handleSignIn}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={user ? () => router.push("/chat") : handleSignIn}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              Get Started
+              {user ? "Go to Dashboard" : "Get Started"}
             </button>
-          )}
-        </div>
+          </div>
+        </section>
 
-        <div className="grid md:grid-cols-3 gap-8 mt-12">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <Bot className="text-blue-500 w-12 h-12 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">AI Assistant</h3>
-            <p className="text-gray-400">
-              Leverage the power of artificial intelligence to enhance your health and wellness journey.
-            </p>
+        <section className="py-16 bg-gray-800">
+          <div className="container mx-auto px-4">
+            <h3 className="text-3xl font-semibold mb-8 text-center">
+              Our AI-Powered Features
+            </h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-gray-700 p-6 rounded-lg shadow-lg">
+                <Bot className="text-blue-500 w-12 h-12 mb-4" />
+                <h4 className="text-xl font-semibold mb-2">AI Assistant</h4>
+                <p className="text-gray-300">
+                  24/7 intelligent support for patients and healthcare
+                  providers, offering instant medical information and guidance.
+                </p>
+              </div>
+              <div className="bg-gray-700 p-6 rounded-lg shadow-lg">
+                <Eye className="text-green-500 w-12 h-12 mb-4" />
+                <h4 className="text-xl font-semibold mb-2">Vision AI</h4>
+                <p className="text-gray-300">
+                  Advanced image analysis for faster and more accurate diagnoses
+                  in radiology, dermatology, and more.
+                </p>
+              </div>
+              <div className="bg-gray-700 p-6 rounded-lg shadow-lg">
+                <FileText className="text-yellow-500 w-12 h-12 mb-4" />
+                <h4 className="text-xl font-semibold mb-2">Document Scan</h4>
+                <p className="text-gray-300">
+                  Effortlessly digitize and analyze medical records,
+                  prescriptions, and clinical notes with our intelligent
+                  scanning technology.
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <Eye className="text-yellow-500 w-12 h-12 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Vision AI</h3>
-            <p className="text-gray-400">
-              Analyze and interpret medical images with cutting-edge computer vision technology.
-            </p>
+        </section>
+
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <h3 className="text-3xl font-semibold mb-8 text-center">
+              Why Choose VitaeAI?
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="flex items-start space-x-4">
+                <Shield className="text-blue-500 w-8 h-8 mt-1" />
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">
+                    HIPAA Compliant
+                  </h4>
+                  <p className="text-gray-400">
+                    Your data is protected with state-of-the-art security
+                    measures, ensuring full compliance with healthcare
+                    regulations.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <Zap className="text-yellow-500 w-8 h-8 mt-1" />
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">Lightning Fast</h4>
+                  <p className="text-gray-400">
+                    Get instant results and insights, allowing you to make
+                    quick, informed decisions for better patient care.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <Activity className="text-green-500 w-8 h-8 mt-1" />
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">
+                    Improved Outcomes
+                  </h4>
+                  <p className="text-gray-400">
+                    Our AI-driven insights lead to better diagnoses,
+                    personalized treatment plans, and improved patient outcomes.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <User className="text-purple-500 w-8 h-8 mt-1" />
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">User-Friendly</h4>
+                  <p className="text-gray-400">
+                    Intuitive interface designed for healthcare professionals,
+                    ensuring a smooth integration into your existing workflow.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <Book className="text-green-500 w-12 h-12 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Document Analyzer</h3>
-            <p className="text-gray-400">
-              Extract and analyze health data from medical records and documents with ease.
-            </p>
-          </div>
-        </div>
+        </section>
 
         {user && (
-          <div className="mt-12 bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold mb-4">Welcome back, {user.displayName}!</h3>
-            <p className="text-gray-400 mb-4">
-              Ready to continue your journey? Explore your dashboard or start a new chat.
-            </p>
-            <Link href={'/chat'} className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-              Go to Dashboard
-            </Link>
-          </div>
+          <section className="py-16 bg-gray-800">
+            <div className="container mx-auto px-4 text-center">
+              <h3 className="text-3xl font-semibold mb-4">
+                Welcome back, {user.displayName}!
+              </h3>
+              <p className="text-xl text-gray-300 mb-8">
+                Ready to revolutionize your healthcare practice? Explore your
+                personalized dashboard and start using our AI-powered tools
+                today.
+              </p>
+              <button
+                onClick={() => router.push("/chat")}
+                className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              >
+                Go to Dashboard
+              </button>
+            </div>
+          </section>
         )}
       </main>
-    </GridBackground>
-  )
+
+      <footer className="border-t border-gray-800 py-8 mt-auto">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-500 mb-4 md:mb-0">
+              &copy; 2024 VitaeAI. All rights reserved.
+            </p>
+            <div className="flex space-x-4">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-blue-500 transition duration-300"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="#"
+                className="text-gray-500 hover:text-blue-500 transition duration-300"
+              >
+                Terms of Service
+              </a>
+              <a
+                href="#"
+                className="text-gray-500 hover:text-blue-500 transition duration-300"
+              >
+                Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
 }
