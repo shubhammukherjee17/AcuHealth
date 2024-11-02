@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Upload, Send, X, Bot } from "lucide-react";
+import Image from "next/image";
 
 type Message = {
   id: number;
@@ -62,14 +63,14 @@ export default function VisionAI() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen bg-stone-900 text-white w-full">
+    <div className="flex flex-col h-svh bg-[#343541] text-white w-full">
       <header className=" p-4">
         <h1 className="text-2xl md:text-4xl font-bold text-center">
           Vision<span className="text-yellow-300">AI</span> Health Analyzer
         </h1>
       </header>
 
-      <main className="flex-grow overflow-auto p-4 space-y-4">
+      <main className="flex-grow overflow-auto p-4 space-y-4 md:px-32">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -79,17 +80,15 @@ export default function VisionAI() {
           >
             <div
               className={`max-w-[80%] p-3 rounded-lg ${
-                message.role === "user" ? "bg-blue-600" : "bg-gray-700"
+                message.role === "user" ? "bg-[#5c5c72]" : "bg-[#444654]"
               }`}
             >
               <div className="flex items-center">
-                {message.role === "user" ? (
-                  null
-                ) : (
+                {message.role === "user" ? null : (
                   <Bot className="h-5 w-5 mr-2" />
                 )}
                 <span className="font-semibold">
-                  {message.role === "user" ? "" : "AI Assistant"}
+                  {message.role === "user" ? "" : "VisionAI"}
                 </span>
               </div>
               <p>{message.content}</p>
@@ -104,7 +103,7 @@ export default function VisionAI() {
           <div className="flex-grow space-y-2">
             <input
               type="text"
-              className="w-full px-3 py-2 text-white bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 text-white bg-[#40414f] rounded-lg focus:outline-none"
               placeholder="Describe any symptoms or concerns..."
               value={context}
               onChange={(e) => setContext(e.target.value)}
@@ -128,7 +127,7 @@ export default function VisionAI() {
 
           <button
             type="submit"
-            className="flex items-center justify-center p-2 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex items-center justify-center p-2 bg-[#10a37f] rounded-lg focus:outline-none"
             disabled={!selectedImage && !context.trim()}
           >
             <Send className="w-6 h-6" />
@@ -137,10 +136,12 @@ export default function VisionAI() {
 
         {selectedImage && (
           <div className="mt-2 relative inline-block">
-            <img
+            <Image
               src={selectedImage}
               alt="Selected"
               className="h-20 w-auto object-contain rounded-lg"
+              width={60}
+              height={60}
             />
             <button
               onClick={() => setSelectedImage(null)}
