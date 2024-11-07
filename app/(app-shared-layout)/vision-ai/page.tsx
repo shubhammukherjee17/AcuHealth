@@ -3,59 +3,70 @@
 import { useState, useRef, useEffect } from "react";
 import { Upload, Send, X, Bot } from "lucide-react";
 import Image from "next/image";
-
-type Message = {
-  id: number;
-  role: "user" | "assistant";
-  content: string;
-};
+import { useChat } from "ai/react";
 
 export default function VisionAI() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [context, setContext] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [imageContext, setImageContext] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const { messages, input, handleInputChange, handleSubmit, setInput } =
+    useChat({
+      api: "/api/analyze",
+      onFinish: () => {
+        setSelectedImage(null);
+        setPreviewImage(null);
+        setImageContext(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      },
+    });
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      setSelectedImage(file);
       const reader = new FileReader();
       reader.onload = (e) => {
-        setSelectedImage(e.target?.result as string);
+        setPreviewImage(e.target?.result as string);
       };
       reader.readAsDataURL(file);
+
+      // Send the image file to the analyze-image route
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const response = await fetch("/api/vision-ai", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        setImageContext(data.imageContext);
+      } catch (error) {
+        console.error("Error analyzing image:", error);
+      }
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!selectedImage && !context.trim()) return;
+    if (!imageContext && !input.trim()) return;
 
-    const newUserMessage: Message = {
-      id: Date.now(),
-      role: "user",
-      content: context || "Image uploaded for analysis",
+    const userMessage = input || "Analyze this image";
+    setInput("");
+
+
+    const formData = {
+      messages: [{ role: "user", content: userMessage }],
+      imageContext: imageContext,
     };
 
-    setMessages((prev) => [...prev, newUserMessage]);
-    setContext("");
-
-    // Simulating AI response
-    setTimeout(() => {
-      const aiResponse: Message = {
-        id: Date.now(),
-        role: "assistant",
-        content:
-          "I've analyzed the image you provided. This is a placeholder response. In a real application, I would provide detailed health insights based on the image and context you've shared.",
-      };
-      setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
-
-    setSelectedImage(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    handleSubmit(event, { data: formData });
   };
 
   useEffect(() => {
@@ -64,7 +75,7 @@ export default function VisionAI() {
 
   return (
     <div className="flex flex-col h-svh bg-[#343541] text-white w-full">
-      <header className=" p-4">
+      <header className="p-4">
         <h1 className="text-2xl md:text-4xl font-bold text-center">
           Vision<span className="text-yellow-300">AI</span> Health Analyzer
         </h1>
@@ -88,7 +99,7 @@ export default function VisionAI() {
                   <Bot className="h-5 w-5 mr-2" />
                 )}
                 <span className="font-semibold">
-                  {message.role === "user" ? "" : "VisionAI"}
+                  {message.role === "user" ? "You" : "VisionAI"}
                 </span>
               </div>
               <p>{message.content}</p>
@@ -98,15 +109,15 @@ export default function VisionAI() {
         <div ref={chatEndRef} />
       </main>
 
-      <footer className=" p-4 w-full md:w-3/4 mx-auto">
-        <form onSubmit={handleSubmit} className="flex items-end space-x-2">
+      <footer className="p-4 w-full md:w-3/4 mx-auto">
+        <form onSubmit={handleFormSubmit} className="flex items-end space-x-2">
           <div className="flex-grow space-y-2">
             <input
               type="text"
               className="w-full px-3 py-2 text-white bg-[#40414f] rounded-lg focus:outline-none"
               placeholder="Describe any symptoms or concerns..."
-              value={context}
-              onChange={(e) => setContext(e.target.value)}
+              value={input}
+              onChange={handleInputChange}
             />
           </div>
 
@@ -128,23 +139,30 @@ export default function VisionAI() {
           <button
             type="submit"
             className="flex items-center justify-center p-2 bg-[#10a37f] rounded-lg focus:outline-none"
-            disabled={!selectedImage && !context.trim()}
+            disabled={!imageContext && !input.trim()}
           >
             <Send className="w-6 h-6" />
           </button>
         </form>
 
-        {selectedImage && (
+        {previewImage && (
           <div className="mt-2 relative inline-block">
             <Image
-              src={selectedImage}
+              src={previewImage}
               alt="Selected"
               className="h-20 w-auto object-contain rounded-lg"
-              width={60}
-              height={60}
+              width={80}
+              height={80}
             />
             <button
-              onClick={() => setSelectedImage(null)}
+              onClick={() => {
+                setSelectedImage(null);
+                setPreviewImage(null);
+                setImageContext(null);
+                if (fileInputRef.current) {
+                  fileInputRef.current.value = "";
+                }
+              }}
               className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
               aria-label="Remove image"
             >

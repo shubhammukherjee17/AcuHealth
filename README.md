@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Healthcare Platform
+
+A comprehensive AI-powered healthcare platform with features like an AI health assistant, health issue scanning via images, and prescription/medical report scanning.
+
+## Features
+
+- **AI Health Assistant**: Provides health advice and personalized recommendations.
+- **AI Vision**: Analyzes images for potential health issues.
+- **Document Scanning**: Scans and organizes prescriptions and medical reports.
 
 ## Getting Started
 
-First, run the development server:
+These instructions will help you set up and run the project on your local machine.
+
+### Prerequisites
+
+1. **Node.js**: Ensure you have Node.js installed. [Download Node.js](https://nodejs.org/).
+2. **Bun (optional)**: Alternatively, you can use [Bun](https://bun.sh/) as the package manager.
+
+### Installation
+
+Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/adityai0/ai-healthcare.git
+cd ai-healthcare
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Using Bun
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+If you choose to use **Bun** as your package manager:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Install dependencies**:
 
-## Learn More
+   ```bash
+   bun install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Run the development server**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   bun dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Build for production**:
 
-## Deploy on Vercel
+   ```bash
+   bun build
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Start the production server**:
+   ```bash
+   bun start
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Using npm
+
+Alternatively, if you prefer **npm**:
+
+1. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+2. **Run the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Build for production**:
+
+   ```bash
+   npm run build
+   ```
+
+4. **Start the production server**:
+   ```bash
+   npm start
+   ```
+
+### Environment Variables
+
+Set up a `.env.local` file with necessary environment variables for Firebase, API keys, etc.
+here's sample env file setup
+
+```env
+VISION_PRIVATE_KEY=your_private_key_id
+VISION_CLIENT_EMAIL=your_client_email
+GEMINI_API_KEY=your_gemini_api_key
+GOOGLE_GENERATIVE_AI_API_KEY=api-key
+NEXT_PUBLIC_FIREBASE_API_KEY=firebase-api-key
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=firebase-message-sender
+NEXT_PUBLIC_FIREBASE_APP_ID=firebase-app-id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=firebase-measurement-id
+```
+
+### Technologies Used
+
+- **Next.js** for frontend and backend integration.
+- **Firebase Firestore** for database management.
+- **Vercel AI SDK** for AI capabilities.
+- **Google Cloud Vision API** for image analysis.
+
+### Contributing
+
+Feel free to open issues and submit pull requests to improve the platform.
+
+### License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.

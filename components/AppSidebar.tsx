@@ -110,7 +110,7 @@ export function AppSidebar() {
 
         {user ? (
           <SidebarGroup>
-            <SidebarGroupLabel>Your Chats</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-white">Your Chats</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu className="p-2">
                 {isLoading ? (
