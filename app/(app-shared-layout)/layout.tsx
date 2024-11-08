@@ -1,6 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dynamic = 'force-dynamic'
 
 export default function ChatLayout({

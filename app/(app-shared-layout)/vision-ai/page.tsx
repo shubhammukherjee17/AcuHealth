@@ -5,6 +5,7 @@ import { Upload, Send, X, Bot } from "lucide-react";
 import Image from "next/image";
 import { useChat } from "ai/react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dynamic = "force-dynamic";
 
 export default function VisionAI() {
