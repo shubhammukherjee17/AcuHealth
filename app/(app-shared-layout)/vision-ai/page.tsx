@@ -5,6 +5,8 @@ import { Upload, Send, X, Bot } from "lucide-react";
 import Image from "next/image";
 import { useChat } from "ai/react";
 
+const dynamic = "force-dynamic";
+
 export default function VisionAI() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -26,7 +28,9 @@ export default function VisionAI() {
       },
     });
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedImage(file);
@@ -38,7 +42,7 @@ export default function VisionAI() {
 
       // Send the image file to the analyze-image route
       const formData = new FormData();
-      formData.append('image', file);
+      formData.append("image", file);
 
       try {
         const response = await fetch("/api/vision-ai", {
@@ -59,7 +63,6 @@ export default function VisionAI() {
 
     const userMessage = input || "Analyze this image";
     setInput("");
-
 
     const formData = {
       messages: [{ role: "user", content: userMessage }],

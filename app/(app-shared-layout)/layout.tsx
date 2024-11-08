@@ -1,6 +1,8 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
+const dynamic = 'force-dynamic'
+
 export default function ChatLayout({
   children,
 }: Readonly<{
