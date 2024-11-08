@@ -6,7 +6,7 @@ import Link from "next/link";
 import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/lib/firebase";
-
+import { useRouter } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -36,6 +36,7 @@ const staticItems = [
 ];
 
 export function AppSidebar() {
+  const router = useRouter();
   const { user, logOut } = useAuth();
   const [chats, setChats] = useState<Array<{ id: string; title: string }>>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -97,10 +98,10 @@ export function AppSidebar() {
               {staticItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url} className="py-5">
+                    <Button onClick={()=> router.push(item.url)} className="py-5">
                       <item.icon />
                       <span>{item.title}</span>
-                    </Link>
+                    </Button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
