@@ -22,7 +22,7 @@ These instructions will help you set up and run the project on your local machin
 Clone the repository:
 
 ```bash
-git clone https://github.com/adityai0/ai-healthcare.git
+git clone https://github.com/shubhammukherjee17/ai-healthcare.git
 cd ai-healthcare
 ```
 
