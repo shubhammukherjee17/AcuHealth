@@ -39,7 +39,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100">
       <header className="border-b border-gray-800 py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-500">VitaeAI</h1>
+          <h1 className="text-2xl font-bold text-blue-500">AcuHealth</h1>
           <nav>
             {user ? (
               <div className="relative">
@@ -138,7 +138,7 @@ export default function Home() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <h3 className="text-3xl font-semibold mb-8 text-center">
-              Why Choose VitaeAI?
+              Why Choose AcuHealth?
             </h3>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="flex items-start space-x-4">

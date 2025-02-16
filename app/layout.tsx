@@ -3,7 +3,7 @@ import "./globals.css";
 import Provider from "./providers";
 
 export const metadata: Metadata = {
-  title: "Vitae AI",
+  title: "AcuHealth",
   description:
     "Experience cutting-edge healthcare with our AI-powered health assistant. Our platform uses advanced AI vision to detect health issues from images, enabling real-time health insights. Effortlessly scan prescriptions and medical reports for organized, accessible healthcare management. Discover personalized support designed to simplify and enhance your wellness journey.",
 };

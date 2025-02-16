@@ -10,9 +10,9 @@ import {
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: "ai-healthcare-app.firebaseapp.com",
-  projectId: "ai-healthcare-app",
-  storageBucket: "ai-healthcare-app.firebasestorage.app",
+  authDomain: "ai-healthcare-d131c.firebaseapp.com",
+  projectId: "ai-healthcare-d131c",
+  storageBucket: "ai-healthcare-d131c.firebasestorage.app",
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };

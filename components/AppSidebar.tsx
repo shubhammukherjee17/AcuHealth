@@ -91,7 +91,7 @@ export function AppSidebar() {
       <SidebarContent className="bg-stone-800 text-white">
         <SidebarGroup>
           <SidebarGroupLabel className="text-white text-xl font-black">
-            VitaeAI
+          AcuHealth
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="p-2">

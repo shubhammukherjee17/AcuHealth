@@ -171,9 +171,9 @@ function Chat({ chatId: initialChatId }: ChatProps) {
       <SidebarTrigger className="absolute top-2 left-2 p-5" />
       <header className="flex-shrink-0 p-4 text-center">
         <h1 className="text-2xl md:text-4xl font-bold select-none">
-          Vitae
+          Acu
           <span className="text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent ">
-            AI
+            Health
           </span>
         </h1>
       </header>
