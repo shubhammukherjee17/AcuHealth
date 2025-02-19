@@ -170,7 +170,7 @@ function Chat({ chatId: initialChatId }: ChatProps) {
     <div className="flex flex-col flex-grow h-svh bg-[#343541] text-white md:px-28 relative">
       <SidebarTrigger className="absolute top-2 left-2 p-5" />
       <header className="flex-shrink-0 p-4 text-center">
-        <h1 className="text-2xl md:text-4xl font-bold select-none">
+        <h1 className="text-4xl md:text-4xl font-bold select-none">
           Acu
           <span className="text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent ">
             Health
