@@ -216,7 +216,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 mb-4 md:mb-0">
-              &copy; 2024 VitaeAI. All rights reserved.
+              &copy; 2025 AcuHealth. All rights reserved.
             </p>
             <div className="flex space-x-4">
               <a
