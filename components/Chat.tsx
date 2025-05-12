@@ -167,23 +167,23 @@ function Chat({ chatId: initialChatId }: ChatProps) {
   };
 
   return (
-    <div className="flex flex-col flex-grow h-svh bg-[#343541] text-white md:px-28 relative">
-      <SidebarTrigger className="absolute top-2 left-2 p-5" />
-      <header className="flex-shrink-0 p-4 text-center">
+    <div className="flex flex-col flex-grow h-svh bg-gray-900 text-white md:px-28 relative">
+      <SidebarTrigger className="absolute top-2 left-2 p-5 text-gray-400 hover:text-white transition-colors duration-200" />
+      <header className="flex-shrink-0 p-6 text-center">
         <h1 className="text-4xl md:text-4xl font-bold select-none">
           Acu
-          <span className="text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent ">
+          <span className="text-4xl font-bold bg-gradient-to-r from-violet-500 via-blue-500 to-teal-500 bg-clip-text text-transparent">
             Health
           </span>
         </h1>
       </header>
-      <main className="flex-grow overflow-auto p-4 no-scrollbar">
+      <main className="flex-grow overflow-auto px-4 md:px-6 py-4 no-scrollbar">
         {errorMessage && (
-          <div className="bg-red-500 text-white p-3 rounded mb-4">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl mb-4 backdrop-blur-sm">
             {errorMessage}
           </div>
         )}
-        <div className="space-y-4 flex-grow">
+        <div className="space-y-6 flex-grow">
           {messages.map((m) => (
             <div
               key={m.id}
@@ -192,25 +192,25 @@ function Chat({ chatId: initialChatId }: ChatProps) {
               }`}
             >
               <div
-                className={`max-w-[80%] px-4 py-2 rounded-lg ${
+                className={`max-w-[80%] px-6 py-4 rounded-2xl backdrop-blur-sm ${
                   m.role === "user"
-                    ? "bg-[#5c5c72]"
-                    : "bg-[#444654] py-6 max-w-full md:max-w-[80%]"
+                    ? "bg-blue-500/10 border border-blue-500/20"
+                    : "bg-gray-800/50 border border-gray-700/50 py-6 max-w-full md:max-w-[80%]"
                 }`}
               >
                 {m.role !== "user" && (
-                  <div className="flex items-center mb-2">
-                    <div className="rounded-sm bg-[#10a37f] h-8 w-8 flex items-center justify-center mr-2">
-                      <Bot className="h-5 w-5 text-white" />
+                  <div className="flex items-center mb-4">
+                    <div className="rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 h-10 w-10 flex items-center justify-center mr-3">
+                      <Bot className="h-6 w-6 text-white" />
                     </div>
-                    <span className="font-semibold">AI Assistant</span>
+                    <span className="font-semibold text-gray-200">AI Assistant</span>
                   </div>
                 )}
                 <div className="prose prose-invert max-w-none">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      p: ({ ...props }) => <p className="mb-0" {...props} />,
+                      p: ({ ...props }) => <p className="mb-0 text-gray-300" {...props} />,
                     }}
                   >
                     {m.content}
@@ -222,22 +222,22 @@ function Chat({ chatId: initialChatId }: ChatProps) {
           <div ref={messagesEndRef} />
         </div>
       </main>
-      <footer className="flex-shrink-0 p-4">
+      <footer className="flex-shrink-0 p-6 bg-gray-800/20 backdrop-blur-sm">
         <form
           onSubmit={handleFormSubmit}
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-3 max-w-4xl mx-auto"
         >
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Ask a question..."
-            className="flex-grow p-2 bg-[#40414f] rounded-md text-white placeholder-gray-400 focus:outline-none"
+            className="flex-grow p-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all duration-200"
             aria-label="Chat input"
           />
           {isLoading ? (
             <button
               onClick={stop}
-              className="p-2 bg-[#10a37f] rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-200"
             >
               <StopCircle className="h-5 w-5" />
             </button>
@@ -245,7 +245,7 @@ function Chat({ chatId: initialChatId }: ChatProps) {
             <button
               type="submit"
               disabled={input.trim().length <= 2 || isLoading}
-              className="p-2 bg-[#10a37f] rounded-md text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-3 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-200"
             >
               <SendHorizontal className="h-5 w-5" />
             </button>
