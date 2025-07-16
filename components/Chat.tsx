@@ -167,7 +167,7 @@ function Chat({ chatId: initialChatId }: ChatProps) {
   };
 
   return (
-    <div className="flex flex-col flex-grow h-svh bg-gray-900 text-white md:px-28 relative">
+    <div className="flex flex-col flex-grow h-svh bg-black/90 text-white md:px-28 relative">
       <SidebarTrigger className="absolute top-2 left-2 p-5 text-gray-400 hover:text-white transition-colors duration-200" />
       <header className="flex-shrink-0 p-6 text-center">
         <h1 className="text-4xl md:text-4xl font-bold select-none">
@@ -183,27 +183,25 @@ function Chat({ chatId: initialChatId }: ChatProps) {
             {errorMessage}
           </div>
         )}
-        <div className="space-y-6 flex-grow">
+        <div className="space-y-4 flex-grow">
           {messages.map((m) => (
             <div
               key={m.id}
-              className={`flex ${
-                m.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] px-6 py-4 rounded-2xl backdrop-blur-sm ${
+                className={`max-w-[80%] px-5 py-3 rounded-2xl shadow border backdrop-blur-lg ${
                   m.role === "user"
-                    ? "bg-blue-500/10 border border-blue-500/20"
-                    : "bg-gray-800/50 border border-gray-700/50 py-6 max-w-full md:max-w-[80%]"
+                    ? "bg-[#181b20] border-[#23262b] text-gray-100 font-semibold"
+                    : "bg-[#23262b] border-[#23262b] text-gray-200"
                 }`}
               >
                 {m.role !== "user" && (
-                  <div className="flex items-center mb-4">
-                    <div className="rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 h-10 w-10 flex items-center justify-center mr-3">
-                      <Bot className="h-6 w-6 text-white" />
-                    </div>
-                    <span className="font-semibold text-gray-200">AI Assistant</span>
+                  <div className="flex items-center mb-2">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 via-teal-400 to-purple-400 mr-2">
+                      <Bot className="h-5 w-5 text-white" />
+                    </span>
+                    <span className="font-bold text-gray-100">AI Assistant</span>
                   </div>
                 )}
                 <div className="prose prose-invert max-w-none">
@@ -222,22 +220,22 @@ function Chat({ chatId: initialChatId }: ChatProps) {
           <div ref={messagesEndRef} />
         </div>
       </main>
-      <footer className="flex-shrink-0 p-6 bg-gray-800/20 backdrop-blur-sm">
+      <footer className="flex-shrink-0 p-6 bg-transparent">
         <form
           onSubmit={handleFormSubmit}
-          className="flex items-center space-x-3 max-w-4xl mx-auto"
+          className="flex items-center gap-3 max-w-4xl mx-auto"
         >
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Ask a question..."
-            className="flex-grow p-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all duration-200"
+            className="flex-grow p-3 bg-[#181b20] border border-[#23262b] rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all duration-200 shadow"
             aria-label="Chat input"
           />
           {isLoading ? (
             <button
               onClick={stop}
-              className="p-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-200"
+              className="p-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-200 shadow"
             >
               <StopCircle className="h-5 w-5" />
             </button>
@@ -245,7 +243,7 @@ function Chat({ chatId: initialChatId }: ChatProps) {
             <button
               type="submit"
               disabled={input.trim().length <= 2 || isLoading}
-              className="p-3 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-200"
+              className="p-3 bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-200 shadow"
             >
               <SendHorizontal className="h-5 w-5" />
             </button>
