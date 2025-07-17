@@ -33,7 +33,6 @@ function ErrorFallback({
     </div>
   );
 }
-
 interface ChatProps {
   chatId?: string;
 }
@@ -167,17 +166,17 @@ function Chat({ chatId: initialChatId }: ChatProps) {
   };
 
   return (
-    <div className="flex flex-col flex-grow h-svh bg-black/90 text-white md:px-28 relative">
-      <SidebarTrigger className="absolute top-2 left-2 p-5 text-gray-400 hover:text-white transition-colors duration-200" />
-      <header className="flex-shrink-0 p-6 text-center">
-        <h1 className="text-4xl md:text-4xl font-bold select-none">
+    <div className="flex flex-col flex-grow h-svh bg-black/90 text-white px-2 sm:px-4 md:px-28 relative">
+      <SidebarTrigger className="fixed top-2 left-2 z-30 p-3 sm:p-5 text-gray-400 hover:text-white transition-colors duration-200 md:absolute md:top-2 md:left-2" />
+      <header className="flex-shrink-0 p-4 sm:p-6 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold select-none">
           Acu
-          <span className="text-4xl font-bold bg-gradient-to-r from-violet-500 via-blue-500 to-teal-500 bg-clip-text text-transparent">
+          <span className="text-3xl sm:text-4xl md:text-4xl font-bold bg-gradient-to-r from-violet-500 via-blue-500 to-teal-500 bg-clip-text text-transparent">
             Health
           </span>
         </h1>
       </header>
-      <main className="flex-grow overflow-auto px-4 md:px-6 py-4 no-scrollbar">
+      <main className="flex-grow overflow-auto px-1 sm:px-4 md:px-6 py-2 sm:py-4 no-scrollbar">
         {errorMessage && (
           <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl mb-4 backdrop-blur-sm">
             {errorMessage}
@@ -190,7 +189,7 @@ function Chat({ chatId: initialChatId }: ChatProps) {
               className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] px-5 py-3 rounded-2xl shadow border backdrop-blur-lg ${
+                className={`max-w-[95vw] sm:max-w-[80%] px-4 sm:px-5 py-2 sm:py-3 rounded-2xl shadow border backdrop-blur-lg ${
                   m.role === "user"
                     ? "bg-[#181b20] border-[#23262b] text-gray-100 font-semibold"
                     : "bg-[#23262b] border-[#23262b] text-gray-200"

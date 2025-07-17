@@ -24,7 +24,7 @@ const navItems = [
   },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ className = "" }: { className?: string }) {
   const router = useRouter();
   const { user, logOut } = useAuth();
   const [chats, setChats] = useState<Array<{ id: string; title: string }>>([]);
@@ -68,7 +68,7 @@ export function AppSidebar() {
   if (!user) return null;
 
   return (
-    <aside className="h-screen w-72 flex flex-col justify-between bg-black/80 backdrop-blur-2xl shadow-2xl rounded-r-3xl px-5 py-6">
+    <aside className={`hidden md:flex h-screen w-72 flex-col justify-between bg-black/80 backdrop-blur-2xl shadow-2xl rounded-r-3xl px-3 md:px-5 py-4 md:py-6 ${className}`}>
       {/* Logo */}
       <div>
         <div className="flex flex-col items-start mb-8 mt-2">
