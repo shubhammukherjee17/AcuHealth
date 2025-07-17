@@ -10,6 +10,7 @@ import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const navItems = [
   {
@@ -30,6 +31,7 @@ export function AppSidebar({ className = "" }: { className?: string }) {
   const [chats, setChats] = useState<Array<{ id: string; title: string }>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { isMobile, openMobile, setOpenMobile } = useSidebar();
 
   useEffect(() => {
     async function fetchChats() {
@@ -67,9 +69,9 @@ export function AppSidebar({ className = "" }: { className?: string }) {
 
   if (!user) return null;
 
-  return (
-    <aside className={`hidden md:flex h-screen w-72 flex-col justify-between bg-black/80 backdrop-blur-2xl shadow-2xl rounded-r-3xl px-3 md:px-5 py-4 md:py-6 ${className}`}>
-      {/* Logo */}
+  // Sidebar content as a function for reuse
+  const sidebarContent = (
+    <div className="flex flex-col justify-between h-full">
       <div>
         <div className="flex flex-col items-start mb-8 mt-2">
           <span className="text-3xl font-extrabold bg-gradient-to-r from-blue-500 via-teal-400 to-purple-400 bg-clip-text text-transparent tracking-tight select-none">
@@ -81,7 +83,10 @@ export function AppSidebar({ className = "" }: { className?: string }) {
           {navItems.map((item) => (
             <button
               key={item.title}
-              onClick={() => router.push(item.url)}
+              onClick={() => {
+                router.push(item.url);
+                if (isMobile) setOpenMobile(false);
+              }}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#181b20] shadow text-gray-100 font-semibold text-base transition-all duration-200 hover:bg-[#23262b] focus:bg-[#23262b] focus:outline-none"
             >
               <item.icon className="w-5 h-5 text-gray-300" />
@@ -106,6 +111,7 @@ export function AppSidebar({ className = "" }: { className?: string }) {
                 <div key={chat.id} className="relative group">
                   <Link
                     href={`/chat/${chat.id}`}
+                    onClick={() => { if (isMobile) setOpenMobile(false); }}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#181b20] text-gray-100 font-medium shadow hover:bg-[#23262b] transition-all duration-200"
                   >
                     <MessageSquare className="w-5 h-5 text-gray-300" />
@@ -154,6 +160,28 @@ export function AppSidebar({ className = "" }: { className?: string }) {
           <LogOut className="w-6 h-6" />
         </Button>
       </footer>
+    </div>
+  );
+
+  // Render Sheet (drawer) on mobile, sidebar on desktop
+  if (isMobile) {
+    // Use the Sheet from SidebarProvider context
+    return (
+      <div className={className}>
+        {openMobile && (
+          <div className="fixed inset-0 z-40 bg-black/60" onClick={() => setOpenMobile(false)} />
+        )}
+        <div className={`fixed top-0 left-0 z-50 w-[100vw] max-w-xs sm:max-w-sm md:max-w-md h-[100svh] bg-black/90 backdrop-blur-2xl shadow-2xl rounded-none sm:rounded-r-3xl px-2 sm:px-3 py-2 sm:py-4 transition-transform duration-300 ${openMobile ? 'translate-x-0' : '-translate-x-full'}`}>
+          {sidebarContent}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop sidebar
+  return (
+    <aside className={`hidden md:flex h-screen w-72 flex-col justify-between bg-black/80 backdrop-blur-2xl shadow-2xl rounded-r-3xl px-3 md:px-5 py-4 md:py-6 ${className}`}>
+      {sidebarContent}
     </aside>
   );
 }
