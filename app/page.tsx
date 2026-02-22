@@ -210,7 +210,7 @@ export default function Home() {
       <footer className="border-t border-gray-800 py-8 mt-auto bg-gray-950/90 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm">&copy; 2025 AcuHealth. All rights reserved.</p>
+            <p className="text-gray-500 text-sm">&copy; 2026 AcuHealth. All rights reserved.</p>
             <div className="flex space-x-6 items-center">
               <a
                 href="#"
